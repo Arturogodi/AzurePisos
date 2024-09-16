@@ -5,6 +5,7 @@ import os
 # COMMAND ----------
 
 # DBTITLE 1,Environment Variable
+import os
 # Nombre de la cuenta de almacenamiento
 storage_account_name = "adslpisos"
 

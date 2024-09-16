@@ -1,7 +1,31 @@
 # Databricks notebook source
+ls ./PathConfig/
+
+
+# COMMAND ----------
+
 # DBTITLE 1,Setup Conf: Path Storage
 # Ejecutar el notebook setup_config para cargar las variables de entorno
-%run /PathConfig/Setup_config
+%run ./PathConfig/setup_config
+
+
+# COMMAND ----------
+
+import os
+# Nombre de la cuenta de almacenamiento
+storage_account_name = "adslpisos"
+
+# Rutas de los contenedores (sin subdirectorios adicionales)
+bronze_path = f"abfss://bronzelayer@{storage_account_name}.dfs.core.windows.net"
+silver_path = f"abfss://silverlayer@{storage_account_name}.dfs.core.windows.net"
+gold_path = f"abfss://goldlayer@{storage_account_name}.dfs.core.windows.net"
+
+# Establecer estas rutas como variables de entorno
+os.environ["BRONZE_PATH"] = bronze_path
+os.environ["SILVER_PATH"] = silver_path
+os.environ["GOLD_PATH"] = gold_path
+
+print("Rutas y credenciales configuradas con éxito.")
 
 # COMMAND ----------
 
@@ -15,11 +39,20 @@ spark = SparkSession.builder.appName("BronzeToSilver").getOrCreate()
 
 # Obtener las rutas desde las variables de entorno
 import os
-bronze_path = os.environ["bronze_path"]
-silver_path = os.environ["silver_path"]
+bronze_path = os.environ["BRONZE_PATH"]
+silver_path = os.environ["SILVER_PATH"]
 
 # Directorio específico dentro de Bronze Layer
 bronze_madrid_path = f"{bronze_path}/Madrid18"
+
+# COMMAND ----------
+
+# Definir la ruta específica al directorio 'Madrid18' dentro de Bronze Layer
+bronze_madrid_path = f"{bronze_path}/Madrid18"
+
+# Verificar la estructura de los archivos dentro del directorio
+display(dbutils.fs.ls(bronze_madrid_path))
+
 
 # COMMAND ----------
 
