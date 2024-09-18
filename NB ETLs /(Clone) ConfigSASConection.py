@@ -35,3 +35,7 @@ with open("/dbfs/FileStore/configure_storage.py", "w") as file:
 
 # To run this script from other notebooks, use the following command in those notebooks:
 # %run /dbfs/FileStore/configure_storage.py
+
+# COMMAND ----------
+
+

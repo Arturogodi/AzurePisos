@@ -38,3 +38,7 @@ dbutils.fs.put("/Users/jose.a.gomez.diaz@avanade.com/AzurePisos/configure_storag
 
 # To run this script from other notebooks, use the following command in those notebooks:
 # %run /Users/jose.a.gomez.diaz@avanade.com/AzurePisos/configure_storage.py
+
+# COMMAND ----------
+
+
