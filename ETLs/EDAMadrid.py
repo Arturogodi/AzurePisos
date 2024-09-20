@@ -8,6 +8,8 @@ Delta_path = generate_path('raw-pois-delta2018','silverlayer')
 Sales_path = generate_path('raw-sales-delta2018','silverlayer')
 Develop_path = generate_path('raw-develop-delta2024','silverlayer')
 
+Transform_Data_develop = generate_path('s-properties-develop-madrid2024', 'silverlayer')
+
 Transform_Data = generate_path('transform-delta2018','silverlayer')
 
 
@@ -17,7 +19,8 @@ Transform_Data = generate_path('transform-delta2018','silverlayer')
 df_poly = spark.read.format("delta").load(Poly_path)
 df_delta = spark.read.format("delta").load(Delta_path)
 df_sales = spark.read.format("delta").load(Sales_path)
-df_develop = spark.read.format("delta").load(Develop_path)
+#df_develop = spark.read.format("delta").load(Develop_path)
+df_develop = spark.read.format("delta").load(Transform_Data_develop)
 
 # Display basic statistics for each dataframe
 display(df_poly.describe())

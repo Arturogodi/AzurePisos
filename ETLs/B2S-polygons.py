@@ -24,8 +24,14 @@ Silver_path = generate_path('raw-poly-delta2018','silverlayer')
 # COMMAND ----------
 
 # DBTITLE 1,Madrid Sales
+from pyspark.sql.functions import lit
+
 file_name = "Madrid_Polygons.json"
-dfm = spark.read.json(f"{Bronze_madrid_path}/{file_name}", multiLine=True)
+dfm = spark.read.json(
+    f"{Bronze_madrid_path}/{file_name}", 
+    multiLine=True
+)
+dfm = dfm.withColumn("city", lit("Madrid"))
 display(dfm)
 
 # COMMAND ----------
@@ -33,6 +39,7 @@ display(dfm)
 # DBTITLE 1,Barcelona Sales
 file_name = "Barcelona_Polygons.json"
 dfb = spark.read.json(f"{Bronze_barcelona_path}/{file_name}", multiLine=True)
+dfb = dfb.withColumn("city", lit("Barcelona"))
 display(dfb)
 
 # COMMAND ----------
@@ -40,6 +47,7 @@ display(dfb)
 # DBTITLE 1,Valencia Sales
 file_name = "Valencia_Polygons.json"
 dfv = spark.read.json(f"{Bronze_valencia_path}/{file_name}", multiLine=True)
+dfv = dfv.withColumn("city", lit("Valencia"))
 display(dfv)
 
 # COMMAND ----------

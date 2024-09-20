@@ -24,15 +24,21 @@ Silver_path = generate_path('raw-pois-delta2018','silverlayer')
 # COMMAND ----------
 
 # DBTITLE 1,Madrid Sales
+from pyspark.sql.functions import lit
+
 file_name = "Madrid_Pois.json"
 dfm = spark.read.json(f"{Bronze_madrid_path}/{file_name}", multiLine=True)
+dfm = dfm.withColumn("Region", lit("Madrid"))
 display(dfm)
 
 # COMMAND ----------
 
 # DBTITLE 1,Barcelona Sales
+from pyspark.sql.functions import lit
+
 file_name = "Barcelona_POIS.json"
 dfb = spark.read.json(f"{Bronze_barcelona_path}/{file_name}", multiLine=True)
+dfb = dfb.withColumn("Region", lit("Barcelona"))
 display(dfb)
 
 # COMMAND ----------
@@ -40,13 +46,15 @@ display(dfb)
 # DBTITLE 1,Valencia Sales
 file_name = "Valencia_POIS.json"
 dfv = spark.read.json(f"{Bronze_valencia_path}/{file_name}", multiLine=True)
+dfv = dfv.withColumn("Region", lit("Valencia"))
 display(dfv)
 
 # COMMAND ----------
 
 file_name = "Madrid_.json"
 df_ = spark.read.json(f"{Bronze_madrid_path}/{file_name}", multiLine=True)
-display(dfm)
+df_ = df_.withColumn("Region", lit("Madrid"))
+display(df_)
 
 # COMMAND ----------
 
