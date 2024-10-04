@@ -1,0 +1,31 @@
+MovimientoID,Nombre,TipoID,Poder
+1,Placaje,1,40
+2,Chispa,4,65
+3,Latigazo,3,45
+4,Araniazo,6,50
+5,Placaje Electrico,4,55
+6,Latigo Cepa,7,50
+7,Embestida,1,70
+8,Grunido,11,0
+9,Agilidad,14,0
+10,Hiperrayo,1,150
+11,Tornado,9,85
+12,Psiquico,14,90
+13,Pulso Umbrio,15,75
+14,Ciclon,9,70
+15,Chispa,4,65
+16,Cola Venenosa,10,50
+17,Avalancha,5,80
+18,Cuchillada,3,60
+19,Mega Punch,6,70
+20,Esfera Aural,14,85
+21,Lanzar Lodo,11,55
+22,Patada Salto Alta,6,75
+23,Anillo Igneo,1,95
+24,Fuego Fatuo,1,60
+25,Trampa Rocas,8,40
+26,Golpe Roca,12,50
+27,Electrocanion,4,100
+28,Ala de Acero,9,70
+29,Tinieblas,15,80
+30,Descarga Electrica,4,75
