@@ -3,6 +3,11 @@
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC ### Paths
+
+# COMMAND ----------
+
 Develop_path = generate_path('raw-develop-delta2024','silverlayer')
 
 Transform_Data = generate_path('s-properties-develop-madrid2024', 'silverlayer')
@@ -14,6 +19,11 @@ df_develop = spark.read.format("delta").load(Develop_path)
 
 # Display the expanded DataFrame
 display(df_develop)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### ETLs
 
 # COMMAND ----------
 

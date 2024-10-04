@@ -19,7 +19,7 @@ Silver_path = generate_path('raw-poly-delta2018','silverlayer')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Read data
+# MAGIC ### Read data from Bronze to Silver
 
 # COMMAND ----------
 

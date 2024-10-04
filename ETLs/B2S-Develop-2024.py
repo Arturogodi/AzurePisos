@@ -13,6 +13,11 @@ Silver_path = generate_path('raw-develop-delta2024','silverlayer')
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC ### Autoloader, extract date of filename
+
+# COMMAND ----------
+
 from pyspark.sql.functions import regexp_extract, to_timestamp, input_file_name
 
 def extract_date_from_filename(df, regex_pattern, date_format="yyyyMMddHHmmss"):
