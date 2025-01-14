@@ -45,7 +45,7 @@ display(df_develop_cleaned)
 # COMMAND ----------
 
 # Split the DataFrame into two parts
-df_modelo_propiedad = df_develop_cleaned.select('extracted_element', 'split_elements').withColumnRenamed('extracted_element', 'property_code').withColumnRenamed('split_elements', 'property_info')
+df_modelo_propiedad = df_develop_cleaned.select('extracted_element', 'split_elements', 'extracted_date', 'readable_date').withColumnRenamed('extracted_element', 'property_code').withColumnRenamed('split_elements', 'property_info')
 df_resto = df_develop_cleaned.drop('split_elements').withColumnRenamed('extracted_element', 'property_code')
 
 # Display the DataFrames
@@ -159,8 +159,8 @@ display(df_modelo_propiedad_exploded)
 
 # COMMAND ----------
 
-# Save df_modelo_propiedad_exploded to the specified path
-df_modelo_propiedad_exploded.write.format("delta").mode("overwrite").save(generate_path('s-clean-properties-model-madrid2024', 'silverlayer'))
+# Save df_modelo_propiedad_exploded to the specified path with schema evolution enabled
+df_modelo_propiedad_exploded.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(generate_path('s-clean-properties-model-madrid2024', 'silverlayer'))
 
-# Save df_resto to the specified path
-df_resto.write.format("delta").mode("overwrite").save(generate_path('s-properties-raw-madrid2024', 'silverlayer'))
+# Save df_resto to the specified path with schema evolution enabled
+df_resto.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(generate_path('s-properties-raw-madrid2024', 'silverlayer'))

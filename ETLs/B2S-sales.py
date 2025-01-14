@@ -61,3 +61,7 @@ df_combined.write.format("delta") \
     .mode("overwrite") \
     .option("mergeSchema", "true") \
     .save(Silver_path)
+
+# COMMAND ----------
+
+display(df_combined)

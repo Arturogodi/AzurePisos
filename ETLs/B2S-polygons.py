@@ -68,4 +68,4 @@ df_combined.write.format("delta") \
 
 # COMMAND ----------
 
-
+display(df_combined)

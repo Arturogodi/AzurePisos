@@ -20,6 +20,14 @@ display(df_develop)
 
 from pyspark.sql.functions import col, first
 
+df_timeseries = df_develop.groupBy("property_code", "extracted_date", "readable_date").pivot("Property_key").agg(first(col("Property_value")))
+
+display(df_timeseries )
+
+# COMMAND ----------
+
+from pyspark.sql.functions import col, first
+
 df_pivoted = df_develop.groupBy("property_code").pivot("Property_key").agg(first(col("Property_value")))
 
 display(df_pivoted)
@@ -73,9 +81,20 @@ selected_columns = [
     "pricedropvalue", "propertytype", "province", "rooms", "showaddress", "size", "status", 
     "subtypology", "topplus"
 ]
+selected_columns_ts = [
+    "extracted_date","readable_date","address", "property_code", "bathrooms", "detailedtype", "distance", "district", "exterior", 
+    "externalreference", "floor", "isparkingspaceincludedinprice", "latitude", "longitude", 
+    "municipality", "neighborhood", "newdevelopment", "newdevelopmentfinished", "operation", 
+    "parkingspace", "parkingspaceprice", "price", "pricebyarea", "pricedropinfo", "pricedroppercentage", 
+    "pricedropvalue", "propertytype", "province", "rooms", "showaddress", "size", "status", 
+    "subtypology", "topplus"
+]
 
 df_selected = df_pivoted.select(*selected_columns)
 display(df_selected)
+
+df_timeseries = df_timeseries.select(*selected_columns_ts)
+display(df_timeseries)
 
 # COMMAND ----------
 
@@ -87,6 +106,9 @@ columns_to_remove = [
 
 df_final = df_selected.drop(*columns_to_remove)
 display(df_final)
+
+df_timeseries = df_timeseries.drop(*columns_to_remove)
+display(df_timeseries)
 
 # COMMAND ----------
 
@@ -112,21 +134,17 @@ display(df_final)
 
 # COMMAND ----------
 
-from pyspark.sql.functions import col, countDistinct
+from pyspark.sql.functions import col, when
 
-# Count distinct values in each column
-distinct_counts = df_final.agg(*(countDistinct(col(c)).alias(c) for c in df_final.columns))
+# Convert nulls to 'False' for specified columns
+df_timeseries = df_timeseries.withColumn("exterior", when(col("exterior").isNull(), 'false').otherwise(col("exterior")))
+df_timeseries = df_timeseries.withColumn("isparkingspaceincludedinprice", when(col("isparkingspaceincludedinprice").isNull(), 'false').otherwise(col("isparkingspaceincludedinprice")))
 
-# Collect the distinct counts
-distinct_counts_dict = distinct_counts.collect()[0].asDict()
+# Remove specified columns
+columns_to_remove = ["neighborhood", "newdevelopmentfinished", "parkingspace", "pricedropinfo"]
+df_timeseries = df_timeseries.drop(*columns_to_remove)
 
-# Filter columns with less than 10 distinct values
-columns_with_few_distincts = [col for col, count in distinct_counts_dict.items() if count < 10]
-
-# Display distinct values for columns with less than 10 distinct values
-distinct_values = {col: df_final.select(col).distinct().rdd.flatMap(lambda x: x).collect() for col in columns_with_few_distincts}
-
-display(distinct_values)
+display(df_timeseries)
 
 # COMMAND ----------
 
@@ -140,12 +158,26 @@ display(df_final)
 
 # COMMAND ----------
 
+from pyspark.sql.functions import regexp_replace
+
+# Convert 'true]' to 'true' and 'false]' to 'false' in the 'topplus' column for df_timeseries
+df_timeseries = df_timeseries.withColumn("topplus", regexp_replace(col("topplus"), r'true\]', 'true'))
+df_timeseries = df_timeseries.withColumn("topplus", regexp_replace(col("topplus"), r'false\]', 'false'))
+
+display(df_timeseries)
+
+# COMMAND ----------
+
 from pyspark.sql.functions import when
 
 # Replace nulls in 'status' column with the string 'original'
 df_final = df_final.withColumn("status", when(col("status").isNull(), "original").otherwise(col("status")))
 
 display(df_final)
+
+# COMMAND ----------
+
+
 
 # COMMAND ----------
 
@@ -170,7 +202,10 @@ display(df_final)
 
 # COMMAND ----------
 
-# Save model
-df_final.write.format("delta").mode("overwrite").save(generate_path('s-properties-model-madrid2024', 'silverlayer'))
+# Save model with schema evolution enabled
+df_final.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(generate_path('s-properties-model-madrid2024', 'silverlayer'))
+df_timeseries.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(generate_path('s-properties-timeseries-madrid2024', 'silverlayer'))
+
+# COMMAND ----------
 
 
