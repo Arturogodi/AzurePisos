@@ -3,15 +3,14 @@
 
 # COMMAND ----------
 
-Poly_path = generate_path('raw-poly-delta2018','silverlayer')
-Delta_path = generate_path('raw-pois-delta2018','silverlayer')
-Sales_path = generate_path('raw-sales-delta2018','silverlayer')
-Develop_path = generate_path('raw-develop-delta2024','silverlayer')
+# Generate paths for the datasets
+Poly_path = generate_path('raw-poly-delta2018', 'silverlayer')
+Delta_path = generate_path('raw-pois-delta2018', 'silverlayer')
+Sales_path = generate_path('raw-sales-delta2018', 'silverlayer')
+Develop_path = generate_path('raw-develop-delta2024', 'silverlayer')
 
 Transform_Data_develop = generate_path('s-properties-develop-madrid2024', 'silverlayer')
-
-Transform_Data = generate_path('transform-delta2018','silverlayer')
-
+Transform_Data = generate_path('transform-delta2018', 'silverlayer')
 
 # COMMAND ----------
 

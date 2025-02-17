@@ -86,6 +86,6 @@ display(df_final)
 
 # COMMAND ----------
 
-# Escribir el resultado df_final en Transform_Data = generate_path('s-develop-madrid2024','silverlayer') modo overwrite en delta
+# Write the df_final result in overwrite mode in delta
 Transform_Data = generate_path('s-properties-develop-madrid2024', 'silverlayer')
 df_final.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(Transform_Data)

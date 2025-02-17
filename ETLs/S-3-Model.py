@@ -9,8 +9,6 @@ df_develop = spark.read.format("delta").load(Premodel_Data)
 
 display(df_develop)
 
-
-
 # COMMAND ----------
 
 df_develop = df_develop.drop("property_info", "property_info_exploded")
@@ -20,9 +18,12 @@ display(df_develop)
 
 from pyspark.sql.functions import col, first
 
+# Group by property_code, extracted_date, and readable_date, then pivot on Property_key
+# Aggregate by taking the first value of Property_value for each group
 df_timeseries = df_develop.groupBy("property_code", "extracted_date", "readable_date").pivot("Property_key").agg(first(col("Property_value")))
 
-display(df_timeseries )
+# Display the resulting DataFrame
+display(df_timeseries)
 
 # COMMAND ----------
 
@@ -34,7 +35,10 @@ display(df_pivoted)
 
 # COMMAND ----------
 
+# Generate descriptive statistics of the pivoted DataFrame
 summary_stats = df_pivoted.describe()
+
+# Display the descriptive statistics
 display(summary_stats)
 
 # COMMAND ----------
@@ -68,7 +72,7 @@ display(distinct_counts)
 
 # COMMAND ----------
 
-#quedarme con address, property_code, bathrooms, detailedtype, distance, district, exterior, externalreference, floor, isparkingspaceincludesinprice, latitude, longitude, municipality, neighborhood, newdevelopment,newdevelopmentfinished, operation, parkingspace, parkingspaceprice, price, pricebyarea, pricedropinfo, pricedropppercentage, pricedropvalue, propertytype, province, rooms, showaddress, size, status, subtypology, topplus 
+# address, property_code, bathrooms, detailedtype, distance, district, exterior, externalreference, floor, isparkingspaceincludesinprice, latitude, longitude, municipality, neighborhood, newdevelopment,newdevelopmentfinished, operation, parkingspace, parkingspaceprice, price, pricebyarea, pricedropinfo, pricedropppercentage, pricedropvalue, propertytype, province, rooms, showaddress, size, status, subtypology, topplus 
 
 # COMMAND ----------
 
@@ -177,10 +181,6 @@ display(df_final)
 
 # COMMAND ----------
 
-
-
-# COMMAND ----------
-
 # Remove rows where 'floor' column contains nulls and then get all unique values
 df_check = df_final.filter(col("floor").isNotNull()).select("floor").distinct()
 
@@ -205,7 +205,3 @@ display(df_final)
 # Save model with schema evolution enabled
 df_final.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(generate_path('s-properties-model-madrid2024', 'silverlayer'))
 df_timeseries.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(generate_path('s-properties-timeseries-madrid2024', 'silverlayer'))
-
-# COMMAND ----------
-
-

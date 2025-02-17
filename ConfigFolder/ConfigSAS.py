@@ -1,6 +1,13 @@
 # Databricks notebook source
+# MAGIC %run ./Venv_keys
+
+# COMMAND ----------
+
+#sas_token = "copy from Azure Storage into Venv_keys notebook to access the value"
+
+# COMMAND ----------
+
 # Define the variables
-sas_token = "sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2024-09-13T17:26:20Z&st=2024-09-13T09:26:20Z&spr=https&sig=A%2BvylbgjVYdXrOSGENqY0I%2BzjsCdK4RYUWRV9sNYSV4%3D"
 storage_account_name = "adslpisos"
 
 
