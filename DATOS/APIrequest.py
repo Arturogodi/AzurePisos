@@ -70,6 +70,20 @@ def calculate_new_coordinate(lat, lon, distance_km, angle_degrees):
 
 # Main function to perform requests in a grid
 def main():
+    """
+    Main function to search for properties in a grid pattern around an initial center point.
+    This function performs the following steps:
+    1. Retrieves an access token for authentication.
+    2. Defines the initial center coordinates and grid parameters.
+    3. Iterates over a grid of points, calculating new coordinates for each point.
+    4. Searches for properties around each grid point within a specified distance.
+    5. Saves the search results to a local JSON file.
+    The grid is defined by the number of rows and columns, and the distance between points is calculated based on a diagonal distance of 2 km.
+    Raises:
+        Exception: If there is an error during the property search or saving process, it will be caught and printed.
+    Note:
+        The initial center coordinates and other parameters can be adjusted as needed.
+    """
     access_token = get_access_token()
 
     # Initial center
