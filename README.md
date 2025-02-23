@@ -3,6 +3,7 @@
 # Project Documentation
 
 This project is part of the **TFM "Cloud Native application on Azure for visualizing Machine Learning applied to real estate data" of José Arturo Gómez Díaz**. The final model endpoint will be consumed from a **Django web application**.
+https://pisoswebapp-bzc2agd6dpcwfqf9.northeurope-01.azurewebsites.net
 
 <img src="DATOS/Webbapp.png" alt="Project Image" width="400"/>
 
